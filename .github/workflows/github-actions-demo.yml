@@ -1,0 +1,25 @@
+name: GitHub Actions Demo
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+jobs:
+  init:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [ 18.x ]
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - name: Starting Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: install modules
+        uses: npm install
+      - name: build project
+        uses: npm run build
+      - name: test project
+        uses: npm run test
